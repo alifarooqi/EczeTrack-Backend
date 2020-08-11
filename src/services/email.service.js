@@ -32,9 +32,10 @@ const sendEmail = async (to, subject, text) => {
 const sendResetPasswordEmail = async (to, token) => {
   const subject = 'Reset password';
   // replace this url with the link to the reset password page of your front-end app
-  const resetPasswordUrl = `http://link-to-app/reset-password?token=${token}`;
+  const resetPasswordUrl = `exp://192.168.1.198:19000/?token=${token}`;
   const text = `Dear user,
-  To reset your password, click on this link: ${resetPasswordUrl}
+  To reset your password, click this url: ${resetPasswordUrl}
+  
   If you did not request any password resets, then ignore this email.`;
   await sendEmail(to, subject, text);
 };
