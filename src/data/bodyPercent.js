@@ -1,4 +1,4 @@
-export const bodyPercent = {
+const bodyPercent = {
   head: {
     percent: 3.5,
     front: true,

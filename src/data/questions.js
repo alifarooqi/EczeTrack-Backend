@@ -47,9 +47,3 @@ const exerciseQs = [
         unit: "hours"
     }
 ];
-
-export {
-    stressQs,
-    sleepQs,
-    exerciseQs
-}

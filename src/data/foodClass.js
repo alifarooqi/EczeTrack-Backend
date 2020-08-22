@@ -102,8 +102,3 @@ const foodClass = {
     subcategory: foodClassSubgategories[0]
   },
 }
-
-export {
-  foodClassSubgategories,
-  foodClass
-}
