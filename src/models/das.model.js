@@ -12,8 +12,9 @@ const dasSchema = mongoose.Schema(
         enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack']
       },
       foodItem: mongoose.SchemaTypes.ObjectId,
-      foodItemAmt: {
-        type: Number,
+      foodItemAmt: Number,
+      foodItemAmtUnit: {
+        type: String,
         enum: ['ml', 'g']
       }
     },
