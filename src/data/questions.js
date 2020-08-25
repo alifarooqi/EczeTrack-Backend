@@ -16,7 +16,7 @@ const sleepQs = [
     "Doze off in daily activities(e.g.driving, eating, etc.)",    //3
     "Feel tired after a night of sleep",  //4
     "Overall, you consider your sleep quality",   //5
-]
+];
 
 
 const exerciseQs = [

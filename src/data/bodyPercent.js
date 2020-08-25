@@ -65,4 +65,4 @@ const bodyPercent = {
     back: true,
     bilateral: true
   },
-}
+};
