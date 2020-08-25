@@ -14,58 +14,29 @@ const getUser = async (userId) => {
   return user;
 };
 
-const recordSymptoms = catchAsync(async (req, res) => {
-  const user = await getUser(req.body.userId);
+const DAILY = ['das', 'environment', 'symptom', 'msu'];
+const WEEKLY = ['sleep', 'stress', 'exercise'];
 
-  const { data } = req.body;
+const record = catchAsync(async (req, res) => {
+  const { data, userId, recordModel } = req.body;
+  console.log("Received request to record:", data, userId, recordModel);
+  if (!userId) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid UserId  not found');
   if (!data) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Data  not found');
 
-  // TODO Validate Data
+  const user = await getUser(userId);
+  if (!user) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid User  not found');
 
-  res.status(httpStatus.CREATED).send(user);
-});
+  const record = await recordService.createRecord(recordModel, data);
 
-const recordMSU = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role']);
-  const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await userService.queryUsers(filter, options);
-  res.send(result);
-});
+  console.log("Recorded:", record);
+  if(DAILY.includes(recordModel))
+    await recordService.addToDaily(recordModel, user.id, record._id);
+  else
+    await recordService.addToWeekly(recordModel, user.id, record._id);
 
-const recordDAS = catchAsync(async (req, res) => {
-  const user = await userService.getUserById(req.params.userId);
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-  }
-  res.send(user);
-});
-
-const recordEnv = catchAsync(async (req, res) => {
-  const user = await userService.updateUserById(req.params.userId, req.body);
-  res.send(user);
-});
-
-const recordExercise = catchAsync(async (req, res) => {
-  const user = await userService.updateUserById(req.params.userId, req.body);
-  res.send(user);
-});
-
-const recordStress = catchAsync(async (req, res) => {
-  const user = await userService.updateUserById(req.params.userId, req.body);
-  res.send(user);
-});
-
-const recordSleep = catchAsync(async (req, res) => {
-  const user = await userService.updateUserById(req.params.userId, req.body);
-  res.send(user);
+  res.status(httpStatus.CREATED).send({success: true, recordAdded: recordModel});
 });
 
 module.exports = {
-  recordSymptoms,
-  recordMSU,
-  recordDAS,
-  recordEnv,
-  recordExercise,
-  recordStress,
-  recordSleep,
+  record
 };
