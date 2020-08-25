@@ -52,14 +52,7 @@ const envSchema = mongoose.Schema(
         required: false,
       },
     },
-    foreign_travel: {
-      value: Boolean,
-      other: {
-        type: String,
-        default: null,
-        required: false,
-      },
-    },
+    foreign_travel: Boolean,
     others: {
       value: Boolean,
       other: {
