@@ -1,45 +1,41 @@
 const mongoose = require('mongoose');
-const {
-  toJSON,
-  paginate
-} = require('./plugins');
-
+const { toJSON, paginate } = require('./plugins');
 
 const sleepSchema = mongoose.Schema(
   {
     0: {
       type: Number,
       enum: [0, 1, 2],
-      default: 0
+      default: 0,
     },
     1: {
       type: Number,
       enum: [0, 1, 2],
-      default: 0
+      default: 0,
     },
     2: {
       type: Number,
       enum: [0, 1, 2],
-      default: 0
+      default: 0,
     },
     3: {
       type: Number,
       enum: [0, 1, 2],
-      default: 0
+      default: 0,
     },
     4: {
       type: Number,
       enum: [0, 1, 2],
-      default: 0
+      default: 0,
     },
     5: {
       type: Number,
       enum: [0, 1, 2],
-      default: 0
+      default: 0,
     },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

@@ -1,18 +1,15 @@
 const mongoose = require('mongoose');
-const {
-  toJSON,
-  paginate
-} = require('./plugins');
+const { toJSON, paginate } = require('./plugins');
 
-
-const msuSchema = mongoose.Schema({
+const msuSchema = mongoose.Schema(
+  {
     steroid: String,
     steroidUse: Number,
     moisturizer: String,
     moisturizerUse: Number,
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

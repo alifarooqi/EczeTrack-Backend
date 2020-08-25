@@ -3,7 +3,6 @@ module.exports.User = require('./user.model');
 
 module.exports.BodyPercent = require('../data/bodyPercent');
 
-
 module.exports.Das = require('./das.model');
 module.exports.Env = require('./env.model');
 module.exports.Exercise = require('./exercise.model');

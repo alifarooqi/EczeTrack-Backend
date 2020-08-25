@@ -2,12 +2,10 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { userService , recordService} = require('../services');
-
+const { userService, recordService } = require('../services');
 
 const getUser = async (userId) => {
-  if(!userId)
-    throw new ApiError(httpStatus.BAD_REQUEST, 'User ID  not found');
+  if (!userId) throw new ApiError(httpStatus.BAD_REQUEST, 'User ID  not found');
 
   const user = await userService.getUserById(userId);
   if (!user) {
@@ -16,18 +14,13 @@ const getUser = async (userId) => {
   return user;
 };
 
-
 const recordSymptoms = catchAsync(async (req, res) => {
   const user = await getUser(req.body.userId);
 
-  const data = req.body.data;
-  if(!data)
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Data  not found');
+  const { data } = req.body;
+  if (!data) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Data  not found');
 
-  //TODO Validate Data
-
-
-
+  // TODO Validate Data
 
   res.status(httpStatus.CREATED).send(user);
 });
@@ -67,7 +60,6 @@ const recordSleep = catchAsync(async (req, res) => {
   res.send(user);
 });
 
-
 module.exports = {
   recordSymptoms,
   recordMSU,
@@ -75,5 +67,5 @@ module.exports = {
   recordEnv,
   recordExercise,
   recordStress,
-  recordSleep
+  recordSleep,
 };

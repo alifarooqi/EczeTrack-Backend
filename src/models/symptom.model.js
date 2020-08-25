@@ -1,15 +1,10 @@
 const mongoose = require('mongoose');
-const {
-  toJSON,
-  paginate
-} = require('./plugins');
-const {
-  bodyPercent
-} = require('../data/bodyPercent');
+const { toJSON, paginate } = require('./plugins');
+const { bodyPercent } = require('../data/bodyPercent');
 
 const getSchema = () => {
-  let schema = {};
-  for (let bodyPart in bodyPercent) {
+  const schema = {};
+  for (const bodyPart in bodyPercent) {
     schema[bodyPart] = {
       q1: Number,
       q2: Number,
@@ -17,10 +12,9 @@ const getSchema = () => {
       q4: Number,
       q5: Number,
       q6: Number,
-    }
-    for (let q in ["front", "back", "bilateral"]) {
-      if (bodyPercent[bodyPart][q])
-        schema[bodyPart][q] = Boolean;
+    };
+    for (const q in ['front', 'back', 'bilateral']) {
+      if (bodyPercent[bodyPart][q]) schema[bodyPart][q] = Boolean;
     }
   }
   return schema;

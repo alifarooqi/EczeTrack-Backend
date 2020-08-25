@@ -3,66 +3,66 @@ const bodyPercent = {
     percent: 3.5,
     front: true,
     back: true,
-    bilateral: false
+    bilateral: false,
   },
   neck: {
     percent: 1,
     front: true,
     back: true,
-    bilateral: false
+    bilateral: false,
   },
   torso: {
     percent: 13,
     front: true,
     back: true,
-    bilateral: false
+    bilateral: false,
   },
   externalGenitalia: {
     percent: 1,
     front: true,
     back: false,
-    bilateral: false
+    bilateral: false,
   },
   buttock: {
     percent: 2.5,
     front: false,
     back: true,
-    bilateral: true
+    bilateral: true,
   },
   upperArm: {
     percent: 2,
     front: true,
     back: true,
-    bilateral: true
+    bilateral: true,
   },
   forearm: {
     percent: 1.5,
     front: true,
     back: true,
-    bilateral: true
+    bilateral: true,
   },
   hand: {
     percent: 1.5,
     front: true,
     back: true,
-    bilateral: true
+    bilateral: true,
   },
   thigh: {
     percent: 4.75,
     front: true,
     back: true,
-    bilateral: true
+    bilateral: true,
   },
   calf: {
     percent: 3.5,
     front: true,
     back: true,
-    bilateral: true
+    bilateral: true,
   },
   foot: {
     percent: 1.75,
     front: true,
     back: true,
-    bilateral: true
+    bilateral: true,
   },
 };

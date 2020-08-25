@@ -1,24 +1,20 @@
 const mongoose = require('mongoose');
-const {
-  toJSON,
-  paginate
-} = require('./plugins');
-
+const { toJSON, paginate } = require('./plugins');
 
 const dailySchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.SchemaTypes.ObjectId,
-      required: true
+      required: true,
     },
     symptom: mongoose.SchemaTypes.ObjectId,
     msu: mongoose.SchemaTypes.ObjectId,
     das: mongoose.SchemaTypes.ObjectId,
     environment: mongoose.SchemaTypes.ObjectId,
-    day: mongoose.SchemaTypes.Date
+    day: mongoose.SchemaTypes.Date,
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
