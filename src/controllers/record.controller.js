@@ -19,7 +19,6 @@ const WEEKLY = ['sleep', 'stress', 'exercise'];
 
 const record = catchAsync(async (req, res) => {
   const { data, userId, recordModel } = req.body;
-  console.log("Received request to record:", data, userId, recordModel);
   if (!userId) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid UserId  not found');
   if (!data) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Data  not found');
 
@@ -28,7 +27,6 @@ const record = catchAsync(async (req, res) => {
 
   const record = await recordService.createRecord(recordModel, data);
 
-  console.log("Recorded:", record);
   if(DAILY.includes(recordModel))
     await recordService.addToDaily(recordModel, user.id, record._id);
   else
@@ -37,6 +35,23 @@ const record = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send({success: true, recordAdded: recordModel});
 });
 
+
+const checkWeekly = catchAsync(async (req, res) => {
+  const { userId } = req.body;
+  const weeklyCheck = await recordService.checkWeekly(userId);
+  res.status(httpStatus.OK).send({success: true, weeklyCheck});
+});
+
+const checkDaily = catchAsync(async (req, res) => {
+  const { userId } = req.body;
+  const dailyCheck = await recordService.checkDaily(userId);
+  res.status(httpStatus.OK).send({success: true, dailyCheck});
+});
+
+
+
 module.exports = {
-  record
+  record,
+  checkWeekly,
+  checkDaily
 };

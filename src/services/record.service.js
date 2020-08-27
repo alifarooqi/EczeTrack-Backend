@@ -16,51 +16,43 @@ const createRecord = async (recordModel, data) => {
   if (!models.hasOwnProperty(recordModel)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Model Request');
   }
+  return await models[recordModel].create(data);
+};
 
-  const rec = await models[recordModel].create(data);
-  console.log('Record created for', recordModel, rec);
-  return rec;
+const getToday = ()=>{
+  const d = new Date();
+  return new Date(d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' 8:00:000');
 };
 
 const addToDaily = async (recordModel, userId, recordId) => {
-  if (!models.hasOwnProperty(recordModel)) {
+  if (!models.hasOwnProperty(recordModel))
     throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Model Request');
-  }
 
-  const d = new Date();
-  const today = new Date(d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' 8:00:000');
+  const today = getToday();
 
   let dailyRecord = await Daily.findOne({userId, day: today});
 
-  console.log("Today's record", dailyRecord);
 
   let update = {};
   update[recordModel] = recordId;
 
   if(dailyRecord){
-    const res = await Daily.updateOne({_id: dailyRecord.id}, update);
-    console.log("Daily Record Updated!", res);
+    await Daily.updateOne({_id: dailyRecord.id}, update);
   }
   else{
     update.userId = userId;
     update.day = today;
-    const res = await Daily.create(update);
-    console.log("Daily Record Created!", res);
+    await Daily.create(update);
   }
 
 };
 
-function getWeekNumber(d) {
-  // Copy date so don't modify original
+function getWeekNumber() {
+  let d = new Date();
   d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  // Set to nearest Thursday: current date + 4 - current day number
-  // Make Sunday's day number 7
   d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-  // Get first day of year
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  // Calculate full weeks to nearest Thursday
   const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-  // Return array of year and week number
   return d.getUTCFullYear() + '-' + (weekNo-1);
 }
 
@@ -70,33 +62,71 @@ const addToWeekly = async (recordModel, userId, recordId) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Model Request');
   }
 
-  const week = getWeekNumber(new Date());
+  const week = getWeekNumber();
 
 
   let weeklyRecord = await Weekly.findOne({userId, week});
-
-  console.log("Week's record", weeklyRecord);
 
   let update = {};
   update[recordModel] = userId;
 
   if(weeklyRecord){
-    const res = await Weekly.updateOne({_id: weeklyRecord.id}, update);
-    console.log("Weekly Record Updated!", res);
+    await Weekly.updateOne({_id: weeklyRecord.id}, update);
   }
   else{
     update.userId = userId;
     update.week = week;
-    const res = await Weekly.create(update);
-    console.log("Weekly Record Created!", res);
+    await Weekly.create(update);
   }
 };
 
+const checkWeekly = async userId => {
+  const week = getWeekNumber();
+  let weeklyRecord = await Weekly.findOne({userId, week});
+  let response = {
+    sleep: false,
+    stress: false,
+    exercise: false
+  };
+
+  if(!weeklyRecord)
+    return response;
+
+  for (let i in response){
+    if(weeklyRecord[i])
+      response[i] = true;
+  }
+
+  return response;
+};
+
+const checkDaily = async userId => {
+  const day = getToday();
+  let dailyRecord = await Daily.findOne({userId, day});
+  let response = {
+    das: false,
+    environment: false,
+    symptom: false,
+    msu: false
+  };
+
+  if(!dailyRecord)
+    return response;
+
+  for (let i in response){
+    if(dailyRecord[i])
+      response[i] = true;
+  }
+
+  return response;
+};
 
 
 
 module.exports = {
   createRecord,
   addToDaily,
-  addToWeekly
+  addToWeekly,
+  checkWeekly,
+  checkDaily
 };
