@@ -14,12 +14,26 @@ const preprocess = async () => {
       if(output[desc][foodclass]){
         output[desc][foodclass] += quantity;
       }
-      else
+      else {
         output[desc][foodclass] = quantity;
+      }
     }
     else {
       output[desc] = {};
       output[desc][foodclass] = quantity;
+    }
+  }
+
+  for (let item in output){
+    let total = 0;
+    let foodItem = output[item];
+
+    for (let foodClass in foodItem){
+      total += foodItem[foodClass];
+    }
+
+    for (let foodClass in foodItem){
+      foodItem[foodClass] = foodItem[foodClass] / total
     }
   }
 
