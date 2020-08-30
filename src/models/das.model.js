@@ -7,7 +7,7 @@ const dasSchema = mongoose.Schema(
       type: String,
       enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack'],
     },
-    foodItem: mongoose.SchemaTypes.ObjectId,
+    foodItem: String,
     foodItemAmt: Number,
     foodItemAmtUnit: {
       type: String,
