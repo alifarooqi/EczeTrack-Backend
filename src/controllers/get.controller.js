@@ -8,6 +8,41 @@ const foodList = (req, res) => {
   res.status(httpStatus.OK).send({data: Object.keys(foodDescClassObject)});
 }
 
+const symptoms = (req, res) => {
+  
+}
+
+const msu = (req, res) => {
+  
+}
+
+const das = (req, res) => {
+  
+}
+
+const env = (req, res) => {
+  
+}
+
+const exercise = (req, res) => {
+  
+}
+
+const stress = (req, res) => {
+  
+}
+
+const sleep = (req, res) => {
+  
+}
+
 module.exports = {
-  foodList
+  foodList,
+  symptoms,
+  msu,
+  das,
+  env,
+  exercise,
+  stress,
+  sleep
 }
