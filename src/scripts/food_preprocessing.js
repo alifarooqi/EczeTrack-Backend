@@ -8,7 +8,7 @@ const preprocess = async () => {
   for(let food of fooddata){
     const desc = food['Main food description'];
     const foodclass = food['Food Class'];
-    const quantity = parseInt(food['Ingredient weight (g)']);
+    const quantity = parseFloat(food['Ingredient weight (g)']);
 
     if(output[desc]){
       if(output[desc][foodclass]){
