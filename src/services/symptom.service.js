@@ -44,14 +44,14 @@ const calculate = (symptom) => {
     let multiplier = 0;
     
     for (const q of ['front', 'back', 'bilateral']) {
-      if (symptom[bodyPart][q]) 
+      if (symptom[bodyPart][q])
         multiplier += 1;
     }
 
     let rawScore = 0;
 
     for (let i=1; i<7; i++) {
-      rawScore += symptom[i];
+      rawScore += symptom["q"+i];
     }
 
     score += multiplier * bodyPercent[bodyPart].percent * rawScore;
@@ -60,4 +60,8 @@ const calculate = (symptom) => {
 
   return score;
 
+};
+
+module.exports = {
+  getData
 };
