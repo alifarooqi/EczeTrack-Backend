@@ -1,66 +1,66 @@
 {
   "Head": {
-    "percent": 3.5,
+    "percent": 0.035,
     "front": true,
     "back": true,
     "bilateral": false
   },
   "Neck": {
-    "percent": 1,
+    "percent": 0.01,
     "front": true,
     "back": true,
     "bilateral": false
   },
   "Torso": {
-    "percent": 13,
+    "percent": 0.13,
     "front": true,
     "back": true,
     "bilateral": false
   },
   "External Genitalia": {
-    "percent": 1,
+    "percent": 0.01,
     "front": true,
     "back": false,
     "bilateral": false
   },
   "Buttock": {
-    "percent": 2.5,
+    "percent": 0.025,
     "front": false,
     "back": true,
     "bilateral": true
   },
   "Upper Arm": {
-    "percent": 2,
+    "percent": 0.02,
     "front": true,
     "back": true,
     "bilateral": true
   },
   "Forearm": {
-    "percent": 1.5,
+    "percent": 0.015,
     "front": true,
     "back": true,
     "bilateral": true
   },
   "Hand": {
-    "percent": 1.5,
+    "percent": 0.015,
     "front": true,
     "back": true,
     "bilateral": true
   },
   "Thigh": {
-    "percent": 4.75,
+    "percent": 0.0475,
     "front": true,
     "back": true,
     "bilateral": true
   },
   "Calf": {
-    "percent": 3.5,
+    "percent": 0.035,
     "front": true,
     "back": true,
     "bilateral": true
   },
   "Foot": {
-    "percent": 1.75,
+    "percent": 0.0175,
     "front": true,
     "back": true,
     "bilateral": true
