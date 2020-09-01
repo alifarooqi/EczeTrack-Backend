@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const { Das, Env, Exercise, Msu, Sleep, Stress, Symptom, Daily, Weekly } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { record } = require('../controllers/record.controller');
 
 const models = {
   das: Das,
@@ -19,7 +20,7 @@ const createRecord = async (recordModel, data) => {
   return await models[recordModel].create(data);
 };
 
-const getToday = ()=>{
+const getToday = () => {
   const d = new Date();
   return new Date(d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' 8:00:000');
 };
@@ -30,16 +31,31 @@ const addToDaily = async (recordModel, userId, recordId) => {
 
   const today = getToday();
 
-  let dailyRecord = await Daily.findOne({userId, day: today});
-
+  let dailyRecord = await Daily.findOne({ userId, day: today });
 
   let update = {};
+
+  if (recordModel === "das") {
+    if (dailyRecord) {
+      return await Daily.updateOne({ _id: dailyRecord.id },
+        {
+          $push: { msu: recordId }
+        }
+      );
+    } else {
+      update.userId = userId;
+      update.day = today;
+      update[recordModel]= [recordId]
+      return await Daily.create(update);
+    }
+  }
+
   update[recordModel] = recordId;
 
-  if(dailyRecord){
-    await Daily.updateOne({_id: dailyRecord.id}, update);
+  if (dailyRecord) {
+    await Daily.updateOne({ _id: dailyRecord.id }, update);
   }
-  else{
+  else {
     update.userId = userId;
     update.day = today;
     await Daily.create(update);
@@ -50,10 +66,10 @@ const addToDaily = async (recordModel, userId, recordId) => {
 function getWeekNumber() {
   let d = new Date();
   d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
   const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-  return d.getUTCFullYear() + '-' + (weekNo-1);
+  return d.getUTCFullYear() + '-' + (weekNo - 1);
 }
 
 
@@ -65,15 +81,15 @@ const addToWeekly = async (recordModel, userId, recordId) => {
   const week = getWeekNumber();
 
 
-  let weeklyRecord = await Weekly.findOne({userId, week});
+  let weeklyRecord = await Weekly.findOne({ userId, week });
 
   let update = {};
   update[recordModel] = userId;
 
-  if(weeklyRecord){
-    await Weekly.updateOne({_id: weeklyRecord.id}, update);
+  if (weeklyRecord) {
+    await Weekly.updateOne({ _id: weeklyRecord.id }, update);
   }
-  else{
+  else {
     update.userId = userId;
     update.week = week;
     await Weekly.create(update);
@@ -82,18 +98,18 @@ const addToWeekly = async (recordModel, userId, recordId) => {
 
 const checkWeekly = async userId => {
   const week = getWeekNumber();
-  let weeklyRecord = await Weekly.findOne({userId, week});
+  let weeklyRecord = await Weekly.findOne({ userId, week });
   let response = {
     sleep: false,
     stress: false,
     exercise: false
   };
 
-  if(!weeklyRecord)
+  if (!weeklyRecord)
     return response;
 
-  for (let i in response){
-    if(weeklyRecord[i])
+  for (let i in response) {
+    if (weeklyRecord[i])
       response[i] = true;
   }
 
@@ -102,7 +118,7 @@ const checkWeekly = async userId => {
 
 const checkDaily = async userId => {
   const day = getToday();
-  let dailyRecord = await Daily.findOne({userId, day});
+  let dailyRecord = await Daily.findOne({ userId, day });
   let response = {
     das: false,
     environment: false,
@@ -110,11 +126,11 @@ const checkDaily = async userId => {
     msu: false
   };
 
-  if(!dailyRecord)
+  if (!dailyRecord)
     return response;
 
-  for (let i in response){
-    if(dailyRecord[i])
+  for (let i in response) {
+    if (dailyRecord[i])
       response[i] = true;
   }
 

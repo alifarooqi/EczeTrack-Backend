@@ -8,7 +8,7 @@ const dailySchema = mongoose.Schema(
       required: true,
     },
     symptom: mongoose.SchemaTypes.ObjectId,
-    msu: mongoose.SchemaTypes.ObjectId,
+    msu: [ mongoose.SchemaTypes.ObjectId ],
     das: mongoose.SchemaTypes.ObjectId,
     environment: mongoose.SchemaTypes.ObjectId,
     day: mongoose.SchemaTypes.Date,
