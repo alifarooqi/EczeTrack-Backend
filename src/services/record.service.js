@@ -22,7 +22,7 @@ const createRecord = async (recordModel, data) => {
 
 const getToday = () => {
   const d = new Date();
-  return new Date(d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate() + ' 8:00:000');
+  return new Date(d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' 8:00:000');
 };
 
 const addToDaily = async (recordModel, userId, recordId) => {

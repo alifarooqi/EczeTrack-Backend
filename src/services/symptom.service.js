@@ -3,11 +3,14 @@ const { Symptom, Daily } = require('../models');
 const ApiError = require('../utils/ApiError');
 const bodyPercent = require('../data/bodyPercent');
 
-const getData = async (dateFrom, dateTo, userID) => {
+const {ObjectId} = require('mongoose').Types;
+
+const getData = async (dateFrom, dateTo, userId) => {
   let all_rows = await Daily.find({
-    userID, day: {
-      $gte: ISODate(dateFrom),
-      $lt: ISODate(dateTo)
+    userId: ObjectId(userId),
+    createdAt: {
+      $gte: dateFrom,
+      $lt: dateTo
     }
   });
 
@@ -22,7 +25,7 @@ const getData = async (dateFrom, dateTo, userID) => {
   let data = (new Array(all_rows.length)).fill(0);
 
   for (let i=0; i< all_rows.length; i++){
-      days[i] = formatDay(all_record[i].day);
+      days[i] = formatDay(all_rows[i].createdAt);
       data[i] = calculate(symptoms[i]);
   }
 
@@ -40,22 +43,28 @@ const formatDay = (day) => { //dd-mm
 
 const calculate = (symptom) => {
   let score = 0;
-  for (const bodyPart in symptom){
-    let multiplier = 0;
-    
-    for (const q of ['front', 'back', 'bilateral']) {
-      if (symptom[bodyPart][q])
-        multiplier += 1;
+  console.log(symptom);
+  for (const bodyPart of Object.keys(bodyPercent)) {
+    if (Object.keys(symptom[bodyPart]).length !== 0) {
+      let multiplier = 0;
+
+      for (const q of ['front', 'back', 'bilateral']) {
+        if (symptom[bodyPart][q])
+          multiplier += 1;
+      }
+
+      let rawScore = 0;
+
+      for (let i = 1; i < 7; i++) {
+        rawScore += symptom[bodyPart]["q" + i];
+      }
+
+
+      if(!isNaN(rawScore)){
+        score += multiplier * bodyPercent[bodyPart].percent * rawScore;
+        console.log(bodyPart, multiplier, bodyPercent[bodyPart].percent, rawScore, score);
+      }
     }
-
-    let rawScore = 0;
-
-    for (let i=1; i<7; i++) {
-      rawScore += symptom["q"+i];
-    }
-
-    score += multiplier * bodyPercent[bodyPart].percent * rawScore;
-    console.log(bodyPart, multiplier, rawScore);
   }
 
   return score;

@@ -20,7 +20,7 @@ const foodList = (req, res) => {
 const symptoms = catchAsync(async (req, res) => {
   let { userId, dateFrom, dateTo } = req.body;
   if (!userId) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid UserId  not found');
-  if (!data) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Data  not found');
+  // if (!data) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Data  not found');
 
   dateTo = new Date(dateTo);
   dateFrom = new Date(dateFrom);
