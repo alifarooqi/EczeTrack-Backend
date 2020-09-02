@@ -1,32 +1,20 @@
-const httpStatus = require('http-status');
-const { Symptom, Daily } = require('../models');
-const ApiError = require('../utils/ApiError');
 const bodyPercent = require('../data/bodyPercent');
-const {ObjectId} = require('mongoose').Types;
 
-const { getFactorFromRange } = require('./common.service');
+const { getFactorFromRange, formatDay } = require('./common.service');
 
 const getData = async (dateFrom, dateTo, userId) => {
-  let {data: symptoms, all_rows} = await getFactorFromRange(dateFrom, dateTo, userId, 'symptom');
+  let {data: symptoms, dates} = await getFactorFromRange(dateFrom, dateTo, userId, 'symptom');
 
-  let days = (new Array(all_rows.length)).fill(0);
-  let data = [(new Array(all_rows.length)).fill(0)];
+  let days = (new Array(dates.length)).fill(0);
+  let data = [(new Array(dates.length)).fill(0)];
   let legend = ['Symptoms'];
 
-  for (let i=0; i< all_rows.length; i++){
-      days[i] = formatDay(all_rows[i].createdAt);
+  for (let i=0; i< dates.length; i++){
+      days[i] = formatDay(dates[i]);
       data[0][i] = calculate(symptoms[i]);
   }
 
   return {days, data, legend};
-};
-
-const formatDay = (day) => { //dd-mm 
-    let dateStr = "";
-    dateStr += day.getDate(); //TODO: Add padding??
-    dateStr += "-";
-    dateStr += day.getMonth() + 1;
-    return dateStr;
 };
 
 const calculate = (symptom) => {

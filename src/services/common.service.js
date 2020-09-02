@@ -20,7 +20,7 @@ const getFactorFromRange = async (dateFrom, dateTo, userId, factor) => {
   if (DAILY.includes(factor)){
     all_rows = await Daily.find({
       userId: ObjectId(userId),
-      createdAt: {
+      day: {
         $gte: dateFrom,
         $lt: dateTo
       }
@@ -35,16 +35,31 @@ const getFactorFromRange = async (dateFrom, dateTo, userId, factor) => {
     });
   }
 
-  let ids = new Array(all_rows.length);
+  let ids = [];
+  let dates = [];
+  
   for (let i=0; i< all_rows.length; i++){
-    ids[i] = all_rows[i][factor];
+    let entry = all_rows[i][factor];
+    if (entry){
+      ids.push(entry);
+      dates.push(all_rows[i].day ? all_rows[i].day : all_rows[i].week);
+    }
   }
 
   const data = await models[factor].find().where('_id').in(ids).exec();
 
-  return {data, all_rows};
-}
+  return {data, dates};
+};
+
+const formatDay = (day) => { //dd-mm 
+  let dateStr = "";
+  dateStr += day.getDate(); //TODO: Add padding??
+  dateStr += "-";
+  dateStr += day.getMonth() + 1;
+  return dateStr;
+};
 
 module.exports = {
-  getFactorFromRange
+  getFactorFromRange,
+  formatDay
 }
