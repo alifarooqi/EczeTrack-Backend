@@ -13,7 +13,7 @@ const getData = async (dateFrom, dateTo, userId) => {
     data[1][i] = msus[i].moisturizerUse;
   }
 
-  return {days, data, legend};
+  return { days, data, legend };
 };
 
 module.exports = {

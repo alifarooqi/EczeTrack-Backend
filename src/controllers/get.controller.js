@@ -34,8 +34,8 @@ const getChartData = catchAsync(async (req, res) => {
   dateTo = new Date(dateTo);
   dateFrom = new Date(dateFrom);
 
-  const score = await services[factor].getData(dateFrom, dateTo, userId);
-  res.status(httpStatus.OK).send({ factor, score });
+  const chartData = await services[factor].getData(dateFrom, dateTo, userId);
+  res.status(httpStatus.OK).send({ factor, chartData });
 });
 
 module.exports = {
