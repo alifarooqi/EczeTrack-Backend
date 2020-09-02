@@ -9,19 +9,17 @@ const calculate = (sleep) =>{
 };
 
 const getData = async (dateFrom, dateTo, userId) => {
-  let {data: sleep, all_rows} = await getFactorFromRange(dateFrom, dateTo, userId, 'sleep');
+  let {data: sleep, dates} = await getFactorFromRange(dateFrom, dateTo, userId, 'sleep');
 
-  let weeks = (new Array(sleep.length)).fill(0);
   let data = (new Array(sleep.length)).fill(0);
   let legend = ['Sleep'];
 
   for (let i=0; i< sleep.length; i++){
-    weeks[i] = all_rows[i].week;
     data[i] = calculate(sleep[i]);
   }
   data = [data]; // Converting it into 2D Array for the charts.
 
-  return {weeks, data, legend};
+  return {dates, data, legend};
 };
 
 module.exports = {

@@ -34,6 +34,7 @@ const getFactorFromRange = async (dateFrom, dateTo, userId, factor) => {
       }
     });
   }
+  console.log(all_rows.length);
 
   let ids = [];
   let dates = [];
@@ -45,6 +46,8 @@ const getFactorFromRange = async (dateFrom, dateTo, userId, factor) => {
       dates.push(all_rows[i].day ? all_rows[i].day : all_rows[i].week);
     }
   }
+
+  console.log("IDs:",ids);
 
   const data = await models[factor].find().where('_id').in(ids).exec();
 
