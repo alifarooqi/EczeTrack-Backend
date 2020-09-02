@@ -18,5 +18,7 @@ const getData = async(dateFrom, dateTo, userId) => {
 
   let msus = await Msu.find().where('_id').in(ids).exec();
 
-  
+  let days = (new Array(all_rows.length)).fill(0);
+  let data = [(new Array(all_rows.length)).fill(0)];
+  let legend = ['Steroid Use', 'Moisturizer Use'];
 };
