@@ -102,3 +102,8 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Mac and Ali
+.DS_Store
+src/.DS_Store
+.idea

@@ -44,7 +44,7 @@ const addToDaily = async (recordModel, userId, recordId) => {
     } else {
       update.userId = userId;
       update.day = today;
-      update[recordModel]= [recordId]
+      update[recordModel]= [recordId];
       return await Daily.create(update);
     }
   }
@@ -83,7 +83,7 @@ const addToWeekly = async (recordModel, userId, recordId) => {
   let weeklyRecord = await Weekly.findOne({ userId, week });
 
   let update = {};
-  update[recordModel] = userId;
+  update[recordModel] = recordId;
 
   if (weeklyRecord) {
     await Weekly.updateOne({ _id: weeklyRecord.id }, update);
