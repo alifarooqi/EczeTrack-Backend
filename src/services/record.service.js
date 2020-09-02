@@ -1,7 +1,6 @@
 const httpStatus = require('http-status');
 const { Das, Env, Exercise, Msu, Sleep, Stress, Symptom, Daily, Weekly } = require('../models');
 const ApiError = require('../utils/ApiError');
-const { record } = require('../controllers/record.controller');
 
 const models = {
   das: Das,
@@ -39,7 +38,7 @@ const addToDaily = async (recordModel, userId, recordId) => {
     if (dailyRecord) {
       return await Daily.updateOne({ _id: dailyRecord.id },
         {
-          $push: { msu: recordId }
+          $push: { das: recordId }
         }
       );
     } else {
