@@ -30,7 +30,6 @@ const getData = async (dateFrom, dateTo, userId) => {
   }
 
   return {days, data};
-
 };
 
 const formatDay = (day) => { //dd-mm 

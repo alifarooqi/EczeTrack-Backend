@@ -13,54 +13,32 @@ const {
   sleepService
 } = require('../services');
 
+const services = {
+  symptom: symptomService,
+  msu: msuService,
+  das: dasService,
+  env: envService,
+  exercise: exerciseService,
+  stress: stressService,
+  sleep: sleepService
+}
+
 const foodList = (req, res) => {
   res.status(httpStatus.OK).send({ data: Object.keys(foodDescClassObject) });
 };
 
-const symptoms = catchAsync(async (req, res) => {
-  let { userId, dateFrom, dateTo } = req.body;
-  if (!userId) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid UserId  not found');
-  // if (!data) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Data  not found');
+const getChartData = catchAsync(async (req, res) => {
+  let { userId, dateFrom, dateTo, factor } = req.body;
+  if (!userId) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid UserId not found');
 
   dateTo = new Date(dateTo);
   dateFrom = new Date(dateFrom);
 
-  const score = await symptomService.getData(dateFrom, dateTo, userId);
-  res.status(httpStatus.OK).send({ factor: 'symptom', score });
-
+  const score = await services[factor].getData(dateFrom, dateTo, userId);
+  res.status(httpStatus.OK).send({ factor, score });
 });
-
-const msu = (req, res) => {
-
-};
-
-const das = (req, res) => {
-
-};
-
-const env = (req, res) => {
-
-};
-
-const exercise = (req, res) => {
-
-};
-
-const stress = (req, res) => {
-
-};
-
-const sleep = (req, res) => {
-
-};
 
 module.exports = {
   foodList,
-  symptoms,
-  msu,
-  das,
-  env,
-  exercise,
-  stress,
-  sleep
+  getChartData
 };
