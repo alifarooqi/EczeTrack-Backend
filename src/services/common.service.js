@@ -40,7 +40,9 @@ const getFactorFromRange = async (dateFrom, dateTo, userId, factor) => {
     ids[i] = all_rows[i][factor];
   }
 
-  return await models[factor].find().where('_id').in(ids).exec();
+  const data = await models[factor].find().where('_id').in(ids).exec();
+
+  return {data, all_rows};
 }
 
 module.exports = {

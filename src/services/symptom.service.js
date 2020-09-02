@@ -7,7 +7,7 @@ const {ObjectId} = require('mongoose').Types;
 const { getFactorFromRange } = require('./common.service');
 
 const getData = async (dateFrom, dateTo, userId) => {
-  let symptoms = await getFactorFromRange(dateFrom, dateTo, userId, 'symptom');
+  let {data: symptoms, all_rows} = await getFactorFromRange(dateFrom, dateTo, userId, 'symptom');
 
   let days = (new Array(all_rows.length)).fill(0);
   let data = [(new Array(all_rows.length)).fill(0)];
