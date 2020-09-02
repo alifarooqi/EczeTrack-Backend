@@ -2,34 +2,23 @@ const httpStatus = require('http-status');
 const { Symptom, Daily } = require('../models');
 const ApiError = require('../utils/ApiError');
 const bodyPercent = require('../data/bodyPercent');
-
 const {ObjectId} = require('mongoose').Types;
 
+const { getFactorFromRange } = require('./common.service');
+
 const getData = async (dateFrom, dateTo, userId) => {
-  let all_rows = await Daily.find({
-    userId: ObjectId(userId),
-    createdAt: {
-      $gte: dateFrom,
-      $lt: dateTo
-    }
-  });
-
-  let ids = new Array(all_rows.length);
-  for (let i=0; i< all_rows.length; i++){
-    ids[i] = all_rows[i].symptom;
-  }
-
-  let symptoms = await Symptom.find().where('_id').in(ids).exec();
+  let symptoms = await getFactorFromRange(dateFrom, dateTo, userId, 'symptom');
 
   let days = (new Array(all_rows.length)).fill(0);
-  let data = (new Array(all_rows.length)).fill(0);
+  let data = [(new Array(all_rows.length)).fill(0)];
+  let legend = ['Symptoms'];
 
   for (let i=0; i< all_rows.length; i++){
       days[i] = formatDay(all_rows[i].createdAt);
-      data[i] = calculate(symptoms[i]);
+      data[0][i] = calculate(symptoms[i]);
   }
 
-  return {days, data};
+  return {days, data, legend};
 };
 
 const formatDay = (day) => { //dd-mm 
