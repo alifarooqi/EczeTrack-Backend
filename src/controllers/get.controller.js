@@ -21,7 +21,7 @@ const services = {
   exercise: exerciseService,
   stress: stressService,
   sleep: sleepService
-}
+};
 
 const foodList = (req, res) => {
   res.status(httpStatus.OK).send({ data: Object.keys(foodDescClassObject) });
