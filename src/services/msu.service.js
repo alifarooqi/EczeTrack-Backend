@@ -1,7 +1,7 @@
 const { getFactorFromRange, formatDay } = require('./common.service');
 
 const getData = async (dateFrom, dateTo, userId) => {
-  let { data: msus, all_rows } = await getFactorFromRange(dateFrom, dateTo, userId, 'msu');
+  let { data: msus, data: all_rows } = await getFactorFromRange(dateFrom, dateTo, userId, 'msu');
 
   let days = (new Array(all_rows.length)).fill(0);
   let data = [(new Array(all_rows.length)).fill(0), (new Array(all_rows.length)).fill(0)];
@@ -14,4 +14,8 @@ const getData = async (dateFrom, dateTo, userId) => {
   }
 
   return {days, data, legend};
+};
+
+module.exports = {
+  getData
 };
