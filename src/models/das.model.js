@@ -5,7 +5,7 @@ const dasSchema = mongoose.Schema(
   {
     mealType: {
       type: String,
-      enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack'],
+      enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Fruits'],
     },
     foodItem: String,
     foodItemAmt: Number,

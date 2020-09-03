@@ -101,7 +101,97 @@ const foodClass = {
   'Vegetables and Vegetable Products': {
     subcategory: foodClassSubgategories[0],
   },
+  'Sodium': {
+    subcategory: foodClassSubgategories[12]
+  },
+  'Potassium': {
+    subcategory: foodClassSubgategories[5]
+  },
   'Colors': {
     subcategory: foodClassSubgategories[14]
   }
 };
+
+const foodSubcategoryScoring = {
+  "Whole Fresh Vegetables": {
+    "rubric": 1,
+    "per": 75,
+    "max_score": 5
+  },
+  "Whole Fresh Fruits": {
+    "rubric": 2.5,
+    "per": 150,
+    "max_score": 5
+  },
+  "Unrefined Carbohydrates": {
+    "rubric": 1,
+    "per": 100,
+    "lower_bound": 125,
+    "max_score": 5
+  },
+  "Whole Animal, Plant Protein Foods": {
+    "rubric": 2.5,
+    "per": 114.12,
+    "max_score": 5
+  },
+  "Water": {
+    "rubric": 2,
+    "per": 1896,
+    "max_score": 2
+  },
+  "Potassium": {
+    "rubric": 1,
+    "per": 0.4,
+    "lower_bound": 2.2,
+    "max_score": 3
+  },
+  "Colorful Fruits and Vegetables": {
+    "rubric": 1,
+    "max_score": 4
+  },
+  "Refined Carbohydrates": {
+    "rubric": -1,
+    "per": 12.5,
+    "lower_bound": 125,
+    "max_score": -5
+  },
+  "Fruit and Vegetable Juice": {
+    "rubric": -1,
+    "per": 50,
+    "lower_bound": 100,
+    "max_score": -2
+  },
+  "Dried Fruit and Vegetables": {
+    "rubric": -1,
+    "per": 14.175,
+    "lower_bound": 28.35,
+    "max_score": -2
+  },
+  "Processed Animal, Plant Protein Foods": {
+    "rubric": -1,
+    "per": 14.175,
+    "lower_bound": 28.35,
+    "max_score": -2
+  },
+  "Free Sugar, Sweets, and SSB": {
+    "rubric": -1,
+    "per": 5,
+    "lower_bound": 30,
+    "max_score": -5
+  },
+  "Sodium": {
+    "rubric": -2,
+    "per": 2.3,
+    "lower_bound": 2.3,
+    "max_score": -2
+  },
+  "Snacking": {
+    "rubric": -1,
+    "max_score": -3
+  }
+};
+
+module.exports = {
+  foodClass,
+  foodSubcategoryScoring
+}
