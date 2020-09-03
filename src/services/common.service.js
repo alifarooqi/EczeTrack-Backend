@@ -53,9 +53,9 @@ const getFactorFromRange = async (dateFrom, dateTo, userId, factor) => {
 
 const formatDay = (day) => { //dd-mm 
   let dateStr = "";
-  dateStr += day.getDate(); //TODO: Add padding??
-  dateStr += "-";
   dateStr += day.getMonth() + 1;
+  dateStr += "-";
+  dateStr += day.getDate(); //TODO: Add padding??
   return dateStr;
 };
 

@@ -13,6 +13,7 @@ const foodClassSubgategories = [
   'Free Sugar, Sweets, and SSB', // 11
   'Sodium', // 12
   'Snacking', // 13
+  'Colorful Fruits and Vegetables' //14
 ];
 
 const foodClass = {
@@ -100,4 +101,7 @@ const foodClass = {
   'Vegetables and Vegetable Products': {
     subcategory: foodClassSubgategories[0],
   },
+  'Colors': {
+    subcategory: foodClassSubgategories[14]
+  }
 };
