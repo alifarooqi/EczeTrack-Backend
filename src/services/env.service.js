@@ -3,16 +3,15 @@ const { getFactorFromRange, formatDay } = require('./common.service');
 const getData = async (dateFrom, dateTo, userId) => {
   let { data: env, dates } = await getFactorFromRange(dateFrom, dateTo, userId, 'environment');
 
-  let days = (new Array(dates.length)).fill(0);
   let data = [(new Array(dates.length)).fill(0)];
   let legend = ['Environment'];
 
   for (let i = 0; i < dates.length; i++) {
-    days[i] = formatDay(dates[i]);
+    dates[i] = formatDay(dates[i]);
     data[0][i] = calculate(env[i]);
   }
 
-  return { days, data, legend };
+  return { dates, data, legend };
 };
 
 const calculate = (env) => {
