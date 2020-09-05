@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
-const env2fSchema = mongoose.Schema(
+const envOTSchema = mongoose.Schema(
   {
     current_occuptation: String,
     time_at_present_location: Number,
@@ -41,12 +41,12 @@ const env2fSchema = mongoose.Schema(
 );
 
 // add plugin that converts mongoose to json
-env2fSchema.plugin(toJSON);
-env2fSchema.plugin(paginate);
+envOTSchema.plugin(toJSON);
+envOTSchema.plugin(paginate);
 
 /**
  * @typedef Environment2F
  */
-const Environment2F = mongoose.model('ENV2F', env2fSchema);
+const EnvironmentOT = mongoose.model('envOT', envOTSchema);
 
-module.exports = Environment2F;
+module.exports = EnvironmentOT;
