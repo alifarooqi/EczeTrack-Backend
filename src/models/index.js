@@ -18,4 +18,4 @@ module.exports.Stress = require('./stress.model');
 module.exports.Onetime = require('./onetime.model');
 module.exports.StressOT = require('./stressOT.model');
 module.exports.SymptomOT = require('./symptomOT.model');
-module.exports.EnvOT = require('./envOT.model');
+module.exports.QualityOfLifeOT = require('./qualityOfLifeOT.model');

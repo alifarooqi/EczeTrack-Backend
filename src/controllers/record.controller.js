@@ -27,10 +27,13 @@ const record = catchAsync(async (req, res) => {
 
   const record = await recordService.createRecord(recordModel, data);
 
-  if(DAILY.includes(recordModel))
+  if(DAILY.includes(recordModel)) {
     await recordService.addToDaily(recordModel, user.id, record._id);
-  else
+  } else if (recordModel.slice(-2) === "OT") {
+    await recordService.addToOneTime(recordModel, user.id, record._id)
+  } else {
     await recordService.addToWeekly(recordModel, user.id, record._id);
+  }
 
   res.status(httpStatus.CREATED).send({success: true, recordAdded: recordModel});
 });
@@ -48,10 +51,15 @@ const checkDaily = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send({success: true, dailyCheck});
 });
 
-
+const checkOneTime = catchAsync(async (req, res) => {
+  const { userId } = req.body;
+  const otCheck = await recordService.checkOneTime(userId);
+  res.status(httpStatus.OK).send({success: true, otCheck});
+});
 
 module.exports = {
   record,
   checkWeekly,
-  checkDaily
+  checkDaily,
+  checkOneTime
 };

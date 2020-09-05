@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const { Das, Env, Exercise, Msu, Sleep, Stress, Symptom, Daily, Weekly } = require('../models');
+const { QualityOfLifeOT, SymptomOT, StressOT, Onetime } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 const models = {
@@ -10,6 +11,9 @@ const models = {
   sleep: Sleep,
   stress: Stress,
   symptom: Symptom,
+  symptomOT: SymptomOT,
+  qualityOfLifeOT: QualityOfLifeOT,
+  stressOT: StressOT
 };
 
 const createRecord = async (recordModel, data) => {
@@ -21,7 +25,7 @@ const createRecord = async (recordModel, data) => {
 
 const getToday = () => {
   const d = new Date();
-  return new Date(d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' 8:00:000');
+  return new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' 8:00:000');
 };
 
 const addToDaily = async (recordModel, userId, recordId) => {
@@ -44,7 +48,7 @@ const addToDaily = async (recordModel, userId, recordId) => {
     } else {
       update.userId = userId;
       update.day = today;
-      update[recordModel]= [recordId];
+      update[recordModel] = [recordId];
       return await Daily.create(update);
     }
   }
@@ -79,7 +83,6 @@ const addToWeekly = async (recordModel, userId, recordId) => {
 
   const week = getWeekNumber();
 
-
   let weeklyRecord = await Weekly.findOne({ userId, week });
 
   let update = {};
@@ -92,6 +95,24 @@ const addToWeekly = async (recordModel, userId, recordId) => {
     update.userId = userId;
     update.week = week;
     await Weekly.create(update);
+  }
+};
+
+const addToOneTime = async (recordModel, userId, recordId) => {
+  if (!models.hasOwnProperty(recordModel)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Model Request');
+  }
+
+  let onetimeRecord = await Onetime.findOne({userId});
+
+  let update = {};
+  update[recordModel] = recordId;
+
+  if (onetimeRecord) {
+    await Onetime.updateOne({ _id: onetimeRecord._id }, update);
+  } else {
+    update.userId = userId;
+    await Onetime.create(update);
   }
 };
 
@@ -137,11 +158,34 @@ const checkDaily = async userId => {
 };
 
 
+const checkOneTime = async (userId) => {
+  let onetimeRecord = await Onetime.findOne({ userId });
+
+  let response = {
+    environmentOT: false,
+    symptomOT: false,
+    stressOT: false,
+    qualityOfLifeOT: false
+  };
+
+  if (!onetimeRecord)
+    return response;
+
+  for (let i in response) {
+    if (onetimeRecord[i])
+      response[i] = true;
+  }
+
+  return response
+}
+
 
 module.exports = {
   createRecord,
   addToDaily,
   addToWeekly,
   checkWeekly,
-  checkDaily
+  checkDaily,
+  addToOneTime,
+  checkOneTime
 };
