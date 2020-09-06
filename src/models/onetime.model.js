@@ -7,10 +7,10 @@ const onetimeSchema = mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       required: true,
     },
-    environmentOT: mongoose.SchemaTypes.ObjectId,
-    symptomOT: mongoose.SchemaTypes.ObjectId,
-    stressOT: mongoose.SchemaTypes.ObjectId,
-    qualityOfLifeOT: mongoose.SchemaTypes.ObjectId
+    environmentOT: [mongoose.SchemaTypes.ObjectId],
+    symptomOT: [mongoose.SchemaTypes.ObjectId],
+    stressOT: [mongoose.SchemaTypes.ObjectId],
+    qualityOfLifeOT: [mongoose.SchemaTypes.ObjectId]
   },
   {
     timestamps: true,

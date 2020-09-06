@@ -109,7 +109,11 @@ const addToOneTime = async (recordModel, userId, recordId) => {
   update[recordModel] = recordId;
 
   if (onetimeRecord) {
-    await Onetime.updateOne({ _id: onetimeRecord._id }, update);
+    await Onetime.updateOne({ _id: onetimeRecord._id }, 
+      {
+        $push: update
+      }
+    );
   } else {
     update.userId = userId;
     await Onetime.create(update);
@@ -172,13 +176,13 @@ const checkOneTime = async (userId) => {
     return response;
 
   for (let i in response) {
-    if (onetimeRecord[i])
+    if (onetimeRecord[i].length >= 2){
       response[i] = true;
+    }
   }
 
   return response
 }
-
 
 module.exports = {
   createRecord,
