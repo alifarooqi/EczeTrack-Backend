@@ -32,8 +32,7 @@ const calculate = (symptom) => {
       for (let i = 1; i < 7; i++) {
         rawScore += symptom[bodyPart]["q" + i];
       }
-
-
+      
       if(!isNaN(rawScore)){
         score += multiplier * bodyPercent[bodyPart].percent * rawScore;
       }
