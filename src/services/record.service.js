@@ -2,6 +2,7 @@ const httpStatus = require('http-status');
 const { Das, Env, Exercise, Msu, Sleep, Stress, Symptom, Daily, Weekly } = require('../models');
 const { QualityOfLifeOT, SymptomOT, StressOT, Onetime } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { getToday } = require('./common.service');
 
 const models = {
   das: Das,
@@ -41,11 +42,6 @@ const entryExistsForTheDay = async (userId, recordModel) => {
   if (dailyRecord && dailyRecord[recordModel]) return dailyRecord[recordModel];
 
   return false;
-};
-
-const getToday = () => {
-  const d = new Date();
-  return new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' 8:00:000');
 };
 
 const addToDaily = async (recordModel, userId, recordId) => {

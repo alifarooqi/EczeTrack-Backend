@@ -1,4 +1,6 @@
 const bodyPercent = require('../data/bodyPercent');
+const { Symptom, Daily } = require('../models');
+const { getToday } = require('./common.service');
 
 const { getFactorFromRange, formatDay } = require('./common.service');
 
@@ -43,6 +45,19 @@ const calculate = (symptom) => {
 
 };
 
+const getDaySymptoms = async (userId) => {
+  const today = getToday();
+
+  dailyRecord = await Daily.findOne({ userId, day: today });
+
+  if (dailyRecord && dailyRecord.symptom){
+    symptom = await Symptom.findOne({_id: dailyRecord.symptom});
+    return symptom;
+  }
+  return {};
+}
+
 module.exports = {
-  getData
+  getData,
+  getDaySymptoms
 };

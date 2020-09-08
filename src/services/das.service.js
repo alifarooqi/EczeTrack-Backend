@@ -4,7 +4,7 @@ const {ObjectId} = require('mongoose').Types;
 const { foodSubcategoryScoring, foodClass } = require('../data/foodClass');
 const foodDescToClass = require('../data/food_desc_to_class.json');
 
-const { formatDay } = require('./common.service');
+const { formatDay, getToday } = require('./common.service');
 
 const getDasFromRange = async (dateFrom, dateTo, userId) => {
   let all_rows = await Daily.find({
@@ -135,6 +135,25 @@ const calculateScoreFromSubcategories = (subcategories) => {
   return score
 };
 
+const getDayDAS = async (userId) => {
+  const today = getToday();
+
+  console.log('today', today);
+  dailyRecord = await Daily.findOne({ userId, day: today });
+  console.log('daily record: ', dailyRecord);
+
+  if (dailyRecord && dailyRecord.das.length > 0){
+    const dasIds = dailyRecord.das
+    console.log(dasIds);
+
+    const dayDas = await Das.find().where('_id').in(dasIds).exec();
+    console.log(dayDas);
+    return dayDas;
+  }
+  return [];
+}
+
 module.exports = {
-  getData
+  getData,
+  getDayDAS
 }

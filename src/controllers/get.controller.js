@@ -38,7 +38,30 @@ const getChartData = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send({ factor, chartData });
 });
 
+const getDaySymptoms = async (req, res) => {
+  let { userId } = req.body;
+  symptom = (await symptomService.getDaySymptoms(userId)).toJSON();
+  delete symptom['id'];
+
+  res.status(httpStatus.OK).send({ symptom });
+}
+
+const getDayDAS = async (req, res) => {
+  let { userId } = req.body;
+  das = await dasService.getDayDAS(userId);
+
+  das = das.map((item) => {
+    item = item.toJSON();
+    delete item['id']
+    return item;
+  });
+
+  res.status(httpStatus.OK).send({ das });
+}
+
 module.exports = {
   foodList,
-  getChartData
+  getChartData,
+  getDaySymptoms,
+  getDayDAS
 };
