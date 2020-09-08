@@ -20,8 +20,6 @@ const {
   Weekly,
   Onetime,
 
-  User
-
 } = require('../models');
 const ObjectsToCsv = require('objects-to-csv');
 
