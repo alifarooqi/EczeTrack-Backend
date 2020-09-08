@@ -23,6 +23,26 @@ const createRecord = async (recordModel, data) => {
   return await models[recordModel].create(data);
 };
 
+const updateRecord = async (recordId, recordModel, data) => {
+  let record = await models[recordModel].findOneAndUpdate({_id: recordId}, data);
+  
+  if (!record)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'No such record exists with ID=' + recordId + ' in model ' + recordModel);
+};
+
+const entryExistsForTheDay = async (userId, recordModel) => {
+  if (!models.hasOwnProperty(recordModel))
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Model Request');
+
+  const today = getToday();
+
+  let dailyRecord = await Daily.findOne({ userId, day: today });
+
+  if (dailyRecord && dailyRecord[recordModel]) return dailyRecord[recordModel];
+
+  return false;
+};
+
 const getToday = () => {
   const d = new Date();
   return new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' 8:00:000');
@@ -103,13 +123,13 @@ const addToOneTime = async (recordModel, userId, recordId) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid Model Request');
   }
 
-  let onetimeRecord = await Onetime.findOne({userId});
+  let onetimeRecord = await Onetime.findOne({ userId });
 
   let update = {};
   update[recordModel] = recordId;
 
   if (onetimeRecord) {
-    await Onetime.updateOne({ _id: onetimeRecord._id }, 
+    await Onetime.updateOne({ _id: onetimeRecord._id },
       {
         $push: update
       }
@@ -176,7 +196,7 @@ const checkOneTime = async (userId) => {
     return response;
 
   for (let i in response) {
-    if (onetimeRecord[i].length >= 2){
+    if (onetimeRecord[i].length >= 2) {
       response[i] = true;
     }
   }
@@ -186,6 +206,8 @@ const checkOneTime = async (userId) => {
 
 module.exports = {
   createRecord,
+  updateRecord,
+  entryExistsForTheDay,
   addToDaily,
   addToWeekly,
   checkWeekly,
