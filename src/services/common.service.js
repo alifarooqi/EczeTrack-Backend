@@ -59,7 +59,13 @@ const formatDay = (day) => { //dd-mm
   return dateStr;
 };
 
+const getToday = () => {
+  const d = new Date();
+  return new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' 8:00:000');
+};
+
 module.exports = {
   getFactorFromRange,
-  formatDay
+  formatDay,
+  getToday
 }

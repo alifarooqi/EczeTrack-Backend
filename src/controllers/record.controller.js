@@ -3,7 +3,6 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService, recordService } = require('../services');
-const { entryExistsForTheDay } = require('../services/record.service');
 
 const getUser = async (userId) => {
   if (!userId) throw new ApiError(httpStatus.BAD_REQUEST, 'User ID  not found');
