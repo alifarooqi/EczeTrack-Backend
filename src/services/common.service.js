@@ -22,7 +22,7 @@ const getFactorFromRange = async (dateFrom, dateTo, userId, factor) => {
       userId: ObjectId(userId),
       day: {
         $gte: dateFrom,
-        $lt: dateTo
+        $lte: dateTo
       }
     });
   } else {
