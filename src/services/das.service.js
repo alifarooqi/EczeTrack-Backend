@@ -11,7 +11,7 @@ const getDasFromRange = async (dateFrom, dateTo, userId) => {
     userId: ObjectId(userId),
     day: {
       $gte: dateFrom,
-      $lt: dateTo
+      $lte: dateTo
     }
   });
 
