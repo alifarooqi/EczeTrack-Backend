@@ -40,19 +40,19 @@ const getChartData = catchAsync(async (req, res) => {
 
 const getDaySymptoms = async (req, res) => {
   let { userId } = req.body;
-  symptom = (await symptomService.getDaySymptoms(userId)).toJSON();
+  let symptom = (await symptomService.getDaySymptoms(userId));
   delete symptom['id'];
 
   res.status(httpStatus.OK).send({ symptom });
-}
+};
 
 const getDayDAS = async (req, res) => {
   let { userId } = req.body;
-  das = await dasService.getDayDAS(userId);
+  let das = await dasService.getDayDAS(userId);
 
   das = das.map((item) => {
     item = item.toJSON();
-    delete item['id']
+    delete item['id'];
     return item;
   });
 

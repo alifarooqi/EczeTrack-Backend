@@ -52,10 +52,10 @@ const getDaySymptoms = async (userId) => {
 
   if (dailyRecord && dailyRecord.symptom){
     symptom = await Symptom.findOne({_id: dailyRecord.symptom});
-    return symptom;
+    return symptom.toJSON();
   }
   return {};
-}
+};
 
 module.exports = {
   getData,
