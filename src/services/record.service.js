@@ -182,23 +182,23 @@ const checkOneTime = async (userId) => {
   let onetimeRecord = await Onetime.findOne({ userId });
 
   let response = {
-    environmentOT: false,
-    symptomOT: false,
-    stressOT: false,
-    qualityOfLifeOT: false
+    environmentOT: 0,
+    symptomOT: 0,
+    stressOT: 0,
+    qualityOfLifeOT: 0
   };
 
   if (!onetimeRecord)
     return response;
 
   for (let i in response) {
-    if (onetimeRecord[i].length >= 2) {
-      response[i] = true;
-    }
+    response[i] = onetimeRecord[i].length;
   }
 
+  response.environmentOT = -1;
+
   return response
-}
+};
 
 module.exports = {
   createRecord,
