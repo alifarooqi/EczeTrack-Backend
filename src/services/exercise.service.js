@@ -19,7 +19,7 @@ const getData = async (dateFrom, dateTo, userId) => {
   let legend = ['Exercise'];
 
   for (let i=0; i< exercise.length; i++){
-    data[i] = calculate(exercise[i]);
+    data[i] = calculate(exercise[i]) < -1 ? 0 : calculate(exercise[i]);
   }
   data = [data]; // Converting it into 2D Array for the charts.
 

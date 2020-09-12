@@ -8,8 +8,8 @@ const getData = async (dateFrom, dateTo, userId) => {
 
   for (let i = 0; i < dates.length; i++) {
     dates[i] = formatDay(dates[i]);
-    data[0][i] = msus[i].steroidUse;
-    data[1][i] = msus[i].moisturizerUse;
+    data[0][i] = msus[i].steroidUse < -1 ? 0 : msus[i].steroidUse;
+    data[1][i] = msus[i].moisturizerUse < -1 ? 0 : msus[i].moisturizerUse;
   }
 
   return { dates, data, legend };
