@@ -12,7 +12,7 @@ const getData = async (dateFrom, dateTo, userId) => {
 
   for (let i=0; i< dates.length; i++){
       dates[i] = formatDay(dates[i]);
-      data[0][i] = calculate(symptoms[i]) < -1 ? 0 : calculate(symptoms[i]);
+      data[0][i] = calculate(symptoms[i]) < 0 ? 0 : calculate(symptoms[i]);
   }
 
   return {dates, data, legend};

@@ -8,7 +8,7 @@ const getData = async (dateFrom, dateTo, userId) => {
 
   for (let i = 0; i < dates.length; i++) {
     dates[i] = formatDay(dates[i]);
-    data[0][i] = calculate(env[i]) < -1 ? 0 : calculate(env[i]);
+    data[0][i] = calculate(env[i]) < 0 ? 0 : calculate(env[i]);
   }
 
   return { dates, data, legend };

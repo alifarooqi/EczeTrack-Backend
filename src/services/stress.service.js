@@ -16,7 +16,7 @@ const getData = async (dateFrom, dateTo, userId) => {
 
   for (let i=0; i< stress.length; i++){
     dates[i] = formatDay(dates[i]);
-    data[i] = calculate(stress[i]) < -1 ? 0 : calculate(stress[i]);
+    data[i] = calculate(stress[i]) < 0 ? 0 : calculate(stress[i]);
   }
   data = [data]; // Converting it into 2D Array for the charts.
 
