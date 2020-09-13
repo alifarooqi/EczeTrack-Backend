@@ -30,10 +30,14 @@ const getFactorFromRange = async (dateFrom, dateTo, userId, factor) => {
       userId: ObjectId(userId),
       createdAt: {
         $gte: dateFrom,
-        $lt: dateTo
+        $lte: new Date()
       }
     });
   }
+
+  console.log(await Weekly.find());
+  console.log('fatefrom')
+  console.log('All rows: ', all_rows);
 
   let ids = [];
   let dates = [];
@@ -42,7 +46,7 @@ const getFactorFromRange = async (dateFrom, dateTo, userId, factor) => {
     let entry = all_rows[i][factor];
     if (entry){
       ids.push(entry);
-      dates.push(all_rows[i].day ? all_rows[i].day : all_rows[i].week);
+      dates.push(all_rows[i].day ? all_rows[i].day : all_rows[i].createdAt);
     }
   }
 

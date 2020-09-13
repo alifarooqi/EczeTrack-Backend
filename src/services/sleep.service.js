@@ -15,6 +15,7 @@ const getData = async (dateFrom, dateTo, userId) => {
   let legend = ['Sleep'];
 
   for (let i=0; i< sleep.length; i++){
+    dates[i] = formatDay(dates[i]);
     data[i] = calculate(sleep[i]) < -1 ? 0 : calculate(sleep[i]);
   }
   data = [data]; // Converting it into 2D Array for the charts.

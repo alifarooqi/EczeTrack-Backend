@@ -1,4 +1,4 @@
-const { getFactorFromRange } = require('./common.service');
+const { getFactorFromRange, formatDay } = require('./common.service');
 
 const calculate = (stress) =>{
   let score = 0;
@@ -15,6 +15,7 @@ const getData = async (dateFrom, dateTo, userId) => {
   let legend = ['Stress'];
 
   for (let i=0; i< stress.length; i++){
+    dates[i] = formatDay(dates[i]);
     data[i] = calculate(stress[i]) < -1 ? 0 : calculate(stress[i]);
   }
   data = [data]; // Converting it into 2D Array for the charts.
