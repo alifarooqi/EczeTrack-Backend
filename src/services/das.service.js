@@ -43,7 +43,7 @@ const getData = async (dateFrom, dateTo, userId) => {
 
   for (let i = 0; i < dates.length; i++) {
     dates[i] = formatDay(dates[i]);
-    data[0][i] = calculate(das[i]) < -1 ? 0 : calculate(das[i]);
+    data[0][i] = calculate(das[i]) < 0 ? 0 : calculate(das[i]);
   }
 
   return { dates, data, legend };
