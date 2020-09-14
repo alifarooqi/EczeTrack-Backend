@@ -1,8 +1,6 @@
 const bodyPercent = require('../data/bodyPercent');
 const { Symptom, Daily } = require('../models');
-const { getToday } = require('./common.service');
-
-const { getFactorFromRange, formatDay } = require('./common.service');
+const { getFactorFromRange, formatDay, getToday } = require('./common.service');
 
 const getData = async (dateFrom, dateTo, userId) => {
   let {data: symptoms, dates} = await getFactorFromRange(dateFrom, dateTo, userId, 'symptom');
