@@ -1,4 +1,4 @@
-const { getFactorFromRange } = require('./common.service');
+const { getFactorFromRange, formatDay } = require('./common.service');
 
 const calculate = (exercise) =>{
   let score = 0;
