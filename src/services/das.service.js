@@ -65,6 +65,7 @@ const getFoodSubcategoriesFromFoodItems = (foodItems) => {
     const itemFoodClasses = foodDescToClass[item.foodItem];
 
     for (itemFoodClass in itemFoodClasses){
+      console.log(item, itemFoodClasses, itemFoodClass, foodClass[itemFoodClass] )
       const foodSubcategory = foodClass[itemFoodClass].subcategory;
 
       if(foodSubcategory && foodSubcategory != "Snacking"){
@@ -93,7 +94,6 @@ const getFoodSubcategoriesFromFoodItems = (foodItems) => {
 const calculateScoreFromSubcategories = (subcategories) => {
   let score = 0;
 
-  console.log(subcategories);
   for (subcategory in subcategories) {
     let amount = subcategories[subcategory];
     const rubric = foodSubcategoryScoring[subcategory]
