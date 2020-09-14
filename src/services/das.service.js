@@ -65,7 +65,6 @@ const getFoodSubcategoriesFromFoodItems = (foodItems) => {
     const itemFoodClasses = foodDescToClass[item.foodItem];
 
     for (itemFoodClass in itemFoodClasses){
-      console.log(item, itemFoodClasses, itemFoodClass, foodClass[itemFoodClass] )
       const foodSubcategory = foodClass[itemFoodClass].subcategory;
 
       if(foodSubcategory && foodSubcategory != "Snacking"){
@@ -131,23 +130,19 @@ const calculateScoreFromSubcategories = (subcategories) => {
       }
     }
   }
-  console.log(score);
+  
   return score
 };
 
 const getDayDAS = async (userId) => {
   const today = getToday();
 
-  console.log('today', today);
   dailyRecord = await Daily.findOne({ userId, day: today });
-  console.log('daily record: ', dailyRecord);
 
   if (dailyRecord && dailyRecord.das.length > 0){
     const dasIds = dailyRecord.das
-    console.log(dasIds);
 
     const dayDas = await Das.find().where('_id').in(dasIds).exec();
-    console.log(dayDas);
     return dayDas;
   }
   return [];

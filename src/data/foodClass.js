@@ -13,7 +13,8 @@ const foodClassSubgategories = [
   'Free Sugar, Sweets, and SSB', // 11
   'Sodium', // 12
   'Snacking', // 13
-  'Colorful Fruits and Vegetables' //14
+  'Colorful Fruits and Vegetables', //14
+  '/' //15
 ];
 
 const foodClass = {
@@ -109,6 +110,9 @@ const foodClass = {
   },
   'Colors': {
     subcategory: foodClassSubgategories[14]
+  },
+  '/': {
+    subcategory: foodClassSubgategories[15]
   }
 };
 
@@ -188,6 +192,12 @@ const foodSubcategoryScoring = {
   "Snacking": {
     "rubric": -1,
     "max_score": -3
+  },
+  "/": {
+    "rubric": 0,
+    "per": 1,
+    "lower_bound": 9999999999,
+    "max_score": 0
   }
 };
 
